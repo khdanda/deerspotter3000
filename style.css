@@ -16,7 +16,7 @@
 .header {
     min-height: 100vh;
     width: 100%;
-    background-image: linear-gradient(rgba(4, 9, 30, 0.7), rgba(4, 9, 30, 0.7)), url("/C:/Users/Khion/OneDrive/Desktop/Vak IF/PWS webapp/images/WhatsApp Image 2025-01-19 at 22.12.49_35d40d29.jpg");
+    background-image: linear-gradient(rgba(4, 9, 30, 0.7), rgba(4, 9, 30, 0.7)), url("images/WhatsApp Image 2025-01-19 at 22.12.49_35d40d29.jpg");
     background-position: center;
     background-size: cover;
     position: relative;
