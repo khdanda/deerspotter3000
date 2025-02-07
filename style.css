@@ -220,7 +220,7 @@ nav .fa {
 #filePreview .folder-icon {
     width: 300px; /* Adjust size */
     height: 300px; /* Adjust size */
-    background-image: url("C:/Users/Khion/OneDrive/Desktop/Vak IF/PWS webapp/images/free-folder-icon-1484-thumb.png"); /* Replace with your image URL */
+    background-image: url("images/free-folder-icon-1484-thumb.png"); /* Replace with your image URL */
     background-size: cover;
     background-position: center;
     margin-bottom: 10px;
@@ -371,7 +371,7 @@ body {
 .sub-header {
     height: 50vh;
     width: 100%;
-    background-image: linear-gradient(rgba(4,9,30,0.7), rgba(4,8,30,0.7)), url("C:/Users/Khion/OneDrive/Desktop/Vak IF/PWS webapp/images/WhatsApp Image 2025-01-19 at 22.12.49_35d40d29.jpg");
+    background-image: linear-gradient(rgba(4,9,30,0.7), rgba(4,8,30,0.7)), url("images/WhatsApp Image 2025-01-19 at 22.12.49_35d40d29.jpg");
     background-position: center;
     background-size: cover;
     text-align: center;
