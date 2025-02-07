@@ -1,0 +1,434 @@
+/* Global reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Aldrich Regular Font Class */
+.aldrich-regular {
+    font-family: 'Aldrich', sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+/* Header Section */
+.header {
+    min-height: 100vh;
+    width: 100%;
+    background-image: linear-gradient(rgba(4, 9, 30, 0.7), rgba(4, 9, 30, 0.7)), url("/C:/Users/Khion/OneDrive/Desktop/Vak IF/PWS webapp/images/WhatsApp Image 2025-01-19 at 22.12.49_35d40d29.jpg");
+    background-position: center;
+    background-size: cover;
+    position: relative;
+}
+
+/* Navigation Bar */
+nav {
+    display: flex;
+    padding: 2% 6%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Logo */
+nav img {
+    width: 300px;
+}
+
+/* Navigation Links */
+.nav-links {
+    flex: 1;
+    text-align: right;
+}
+
+.nav-links ul li {
+    list-style: none;
+    display: inline-block;
+    padding: 8px 12px;
+    position: relative;
+    top: -65px;
+}
+
+/* Navigation Link Styling */
+.nav-links a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+/* Apply Aldrich font to the navigation links */
+.nav-links a.aldrich-regular {
+    font-family: 'Aldrich', sans-serif;
+}
+
+/* Underline effect for navigation links */
+.nav-links ul li::after {
+    content: '';
+    width: 0%;
+    height: 2px;
+    background: #c6a56b;
+    display: block;
+    margin: auto;
+    transition: 0.5s;
+}
+
+.nav-links ul li:hover::after {
+    width: 100%;
+}
+
+/* Text Box Styling */
+.text-box {
+    width: 90%;
+    color: #fff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-family: 'Aldrich', sans-serif;
+}
+
+/* Heading Inside Text Box */
+.text-box h1 {
+    font-size: 40px;
+}
+
+/* Paragraph Inside Text Box */
+.text-box p {
+    margin: 10px 0 40px;
+    font-size: 14px;
+    color: #c6a56b;
+}
+
+/* Input and Textarea Styling Inside the Text Box */
+.text-box input, .text-box textarea {
+    font-family: 'Aldrich', sans-serif;
+    font-weight: 100;
+    font-style: normal;
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 1px solid #ccc;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    width: 80%;
+    margin-top: 10px;
+}
+
+/* Styling for Textarea */
+.text-box textarea {
+    resize: vertical;
+}
+
+.hero-btn {
+    display: inline-block;
+    text-decoration: none;
+    color: #fff;
+    border: 1px solid #fff;
+    padding: 12px 34px;
+    font-size: 13px;
+    background: transparent;
+    position: relative;
+    cursor: pointer;
+}
+
+.hero-btn:hover {
+    border: 1px solid #c6a56b;
+    background: #c6a56b;
+    transition: 1s;
+}
+
+nav .fa {
+    display: none;
+}
+
+@media (max-width: 700px) {
+    .text-box h1 {
+        font-size: 20px;
+    }
+
+    .nav-links {
+        position: absolute;
+        background: #c6a56b;
+        height: 89.1vh;
+        width: 200px;
+        top: 0;
+        right: -200px;
+        text-align: center;
+        z-index: 2;
+        overflow-y: auto;
+        padding-top: 70px;
+        transition: 1s;
+    }
+
+    .nav-links ul {
+        padding: 0;
+        margin: 0;
+    }
+
+    .nav-links ul li {
+        display: block;
+    }
+
+    nav .fa {
+        display: block;
+        color: #fff;
+        margin: 10px;
+        font-size: 22px;
+        cursor: pointer;
+        position: absolute;
+        top: 12px;
+        right: 20px;
+    }
+
+    .nav-links .fa-times {
+        position: absolute;
+        right: 150px;
+        top: 20px;
+        color: #fff;
+        font-size: 35px;
+        cursor: pointer;
+    }
+
+    .nav-links ul {
+        padding: 30px;
+    }
+}
+
+/* Footer */
+.footer {
+    width: 100%;
+    text-align: center;
+    padding: 30px 0;
+}
+
+.footer h4 {
+    margin-bottom: 25px;
+    margin-top: 70px;
+    font-weight: 600;
+}
+
+/* Folder Preview Styling */
+#filePreview {
+    margin-top: 20px;
+    text-align: center;
+    font-family: 'Aldrich', sans-serif;
+    position: relative; /* Allows child elements to be positioned */
+}
+
+/* Folder Icon Styling */
+#filePreview .folder-icon {
+    width: 300px; /* Adjust size */
+    height: 300px; /* Adjust size */
+    background-image: url("C:/Users/Khion/OneDrive/Desktop/Vak IF/PWS webapp/images/free-folder-icon-1484-thumb.png"); /* Replace with your image URL */
+    background-size: cover;
+    background-position: center;
+    margin-bottom: 10px;
+    display: block;
+    margin: 0 auto;
+    position: absolute; /* Allows positioning within the parent container */
+    left: 50%;  /* Center the icon horizontally */
+    transform: translateX(-50%); /* Fix horizontal centering */
+    top: -450px;  /* Adjust vertical position */
+}
+
+/* Folder Name Styling */
+#filePreview #fileName {
+    font-size: 20px;
+    color: #fff;
+    margin-top: 10px;  /* Space between icon and folder name */
+    position: absolute;
+    left: 50%;  /* Center the folder name horizontally */
+    transform: translateX(-50%); /* Fix horizontal centering */
+    top: -350px;  /* Adjust vertical position */
+}
+
+/* Styling for Folder Input */
+input[type="file"] {
+    display: none;
+}
+
+
+
+#uploadButton {
+    margin-top: -298px; 
+    display: inline-block;
+    text-decoration: none;
+    color: #fff;
+    border: 1px solid #fff;
+    padding: 12px 34px;
+    font-size: 13px;
+    font-family: 'Aldrich', sans-serif;
+ 
+    background: transparent;
+    position: absolute;
+    cursor: pointer;
+    transition: 0.5s;
+
+
+    left: 50%;
+    transform: translateX(-50%);
+
+    /* Control the vertical position manually */
+    top: 50%; 
+}
+
+
+#uploadButton:hover {
+    border: 1px solid #c6a56b;
+    background: #c6a56b;
+    transition: 1s;
+}
+
+/* Loading Screen */
+#loadingScreen {
+    display: none; /* Initially hidden */
+    text-align: center;
+    color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Loading Bar Container */
+#loadingBarContainer {
+    width: 70%; /* Make it longer */
+    height: 20px;
+    background: transparent; /* No background */
+    margin: auto;
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* Loading Bar */
+#loadingBar {
+    width: 0%; /* Start at 0% width */
+    height: 100%;
+    background: #c6a56b; /* Sleek golden color */
+    transition: width 0.5s;
+    border-radius: 10px; /* Sleek rounded corners */
+}
+#loadingScreen p {
+    font-size: 24px; /* Increase the font size */
+    font-family: 'Aldrich', sans-serif; /* Set font to Aldrich */
+    color: #fff; /* White color for the text */
+}
+/* Deer Animation */
+#deer {
+    position: absolute;
+    width: 150px; /* 3x bigger than before */
+    top: -60px; /* Adjust vertical position if necessary */
+    left: -100px; /* Start off-screen */
+    transition: left 0.5s linear;
+}
+/* Keyframes for Deer Animation */
+@keyframes runDeer {
+    0% { left: -100px; } /* Starts off-screen */
+    100% { left: 100%; } /* Runs across the progress bar */
+}
+
+.icons .fab{
+    color:#c6a56b;
+    margin: 0 13px;
+    cursor: pointer;
+    padding: 18px 0;
+
+
+}
+
+.fab-heart-o{
+    color:#c6a56b;
+}
+
+
+/*--------about us page --------------*/
+/* Apply Aldrich font to specific elements */
+/* Global reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Apply Aldrich font to specific elements */
+.aldrich-regular {
+    font-family: 'Aldrich', sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+/* Body reset */
+body {
+    background-color: #468005; /* Set the background color to #c6a56b */
+    min-height: 100vh; /* Make sure the background covers the full height */
+    width: 100%; /* Make sure the background covers the full width */
+    margin: 0; /* Remove default margin */
+}
+
+/* Sub-header */
+.sub-header {
+    height: 50vh;
+    width: 100%;
+    background-image: linear-gradient(rgba(4,9,30,0.7), rgba(4,8,30,0.7)), url("C:/Users/Khion/OneDrive/Desktop/Vak IF/PWS webapp/images/WhatsApp Image 2025-01-19 at 22.12.49_35d40d29.jpg");
+    background-position: center;
+    background-size: cover;
+    text-align: center;
+    color: #fff;
+}
+
+.sub-header h1 {
+    font-family: 'Aldrich', sans-serif;
+    margin-top: -50px;
+}
+
+/* About Us Section */
+.about-us {
+    width: 80%; /* Make the section take up 80% of the screen width */
+    margin: auto; /* Center the section horizontally */
+    padding-top: 80px;
+    padding-bottom: 50px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    background-color: #84bd29; /* Set the background color to #b3b09b */
+    border-radius: 10px;
+    padding: 20px;
+}
+
+/* About Column styling for text */
+.about-col {
+    flex-basis: 60%; /* Text takes 60% of the space */
+    padding-right: 20px; /* Space between the text and image */
+}
+
+.about-col img {
+    width: 35%; /* Image takes 35% of the space */
+    border-radius: 10px;
+}
+
+/* Apply Aldrich font to all paragraphs in the About Us section */
+.about-col p {
+    font-family: 'Aldrich', sans-serif;
+    padding: 15px 0 25px;
+    line-height: 1.6;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .about-us {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .about-col {
+        flex-basis: 100%; /* Text takes full width on smaller screens */
+    }
+
+    .about-col img {
+        width: 80%; /* Image takes more width on smaller screens */
+        margin-top: 20px;
+    }
+}

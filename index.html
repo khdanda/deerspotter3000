@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DEERSPOTTER3000</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Aldrich&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+
+  <style>
+    /* Inline CSS for preview styling */
+    #filePreview {
+      margin-top: 20px;
+      text-align: center;
+      font-family: 'Aldrich', sans-serif;
+    }
+    #filePreview #fileName {
+      font-size: 20px;
+      color: #fff;
+    }
+    /* Styling for Folder Input */
+    input[type="file"] {
+      display: none;
+    }
+    /* Folder Image Styling */
+    #filePreview .folder-icon {
+      width: 100px;
+      height: 100px;
+      margin-bottom: 10px;
+      display: block;
+      margin: 0 auto;
+    }
+    /* Loading Screen */
+    #loadingScreen {
+      display: none;
+      text-align: center;
+      margin-top: 100px;
+    }
+    /* Progress Bar Container */
+    #loadingBarContainer {
+      width: 480px;
+      height: 20px;
+      background: #ccc;
+      margin: auto;
+      position: relative;
+      overflow: hidden;
+    }
+    /* Progress Bar */
+    #loadingBar {
+      width: 0%;
+      height: 100%;
+      background: #c6a56b;
+      transition: width 0.5s;
+    }
+    /* Deer Animation */
+    #deer {
+      position: absolute;
+      width: 150px;
+      top: -60px;
+      left: -100px;
+      transition: left 0.5s linear;
+    }
+    /* Processing Text */
+    #loadingScreen p {
+      font-size: 24px;
+      font-family: 'Aldrich', sans-serif;
+      color: #fff;
+    }
+    /* DEERCATCHER Movable Text */
+    #deercatcherText {
+      position: absolute;
+      top: 270px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 20px;
+      font-family: 'Aldrich', sans-serif;
+      color: #fff;
+      z-index: 10;
+      display: none;
+      white-space: nowrap;
+    }
+    /* Fun Fact Title */
+    #funFactTitle {
+      position: absolute;
+      top: 220px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 30px;
+      font-family: 'Aldrich', sans-serif;
+      color: #fff;
+      z-index: 10;
+      display: none;
+    }
+    /* Download Button Styling (unchanged) */
+    #downloadButton {
+      text-decoration: none;
+      color: #fff;
+      border: 1px solid #fff;
+      padding: 12px 34px;
+      font-family: 'Aldrich', sans-serif;
+      font-size: 13px;
+      background: transparent;
+      cursor: pointer;
+      position: absolute;
+      top: 570px; /* Adjust as needed */
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+    }
+    #downloadButton:hover {
+      border: 1px solid #c6a56b;
+      background-color: #c6a56b;
+      transition: 1s;
+    }
+    
+    
+    
+    .slider:hover img {
+      animation-play-state: paused !important;
+      filter: grayscale(1);
+    }
+    .slider img:hover {
+      filter: grayscale(0);
+    }
+    /* Slider Container */
+   
+
+    /* Download Button */
+    #downloadButton {
+      position: absolute;
+      top: 550px; /* Adjust as needed */
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100; /* Lower z-index to ensure slider is on top */
+    }
+    /* Slider CSS */
+    :root {
+      --items-count: 6;                /* Number of unique images */
+      --width: 370px;                  /* Image width */
+      --height: 400px;                 /* Image height */
+      --duration: 20s;                 /* Total duration of one complete scroll loop */
+      --gap: 10px;                     /* Gap between images */
+      --effective-width: calc(var(--width) + var(--gap)); /* Image width + gap */
+    }
+
+    /* The slider container holds the visible window */
+    .slider {
+      overflow: hidden;
+      width: calc(var(--effective-width) * var(--items-count)); /* Visible width */
+      height: var(--height);
+      position: absolute;
+      top: 100px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 101;
+    }
+
+    /* The slider track that will be animated */
+    .slider-track {
+      display: flex;
+      gap: var(--gap);
+      /* Animate the track so that it scrolls left continuously */
+      animation: scrollSlider var(--duration) linear infinite;
+    }
+
+    /* Style for each image */
+    .slider-track img {
+      width: var(--width);
+      height: var(--height);
+      object-fit: contain;
+    }
+
+    /* Keyframes for continuous scrolling */
+    @keyframes scrollSlider {
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        /* Move left by the full width of one set of images */
+        transform: translateX(calc(-1 * var(--effective-width) * var(--items-count)));
+      }
+    }
+
+/* Pause animation on hover if desired */
+.slider-track:hover {
+  animation-play-state: paused;
+}
+
+  </style>
+</head>
+<body>
+  <section class="header">
+    <nav>
+      <a href="index.html">
+        <img src="images/Beige Minimalist Creative Agency Website Desktop Prototype (3) (1).png" alt="Logo" />
+      </a>
+      <div class="nav-links" id="navLinks">
+        <i class="fa fa-times" onclick="hideMenu()"></i>
+        <ul>
+          <li><a href="index.html" class="aldrich-regular">HOME</a></li>
+          <li><a href="about.html" class="aldrich-regular">ABOUT</a></li>
+          <li><a href="mailto:deerreceiver@gmail.com" class="aldrich-regular">CONTACT</a></li>
+        </ul>
+      </div>
+      <i class="fa fa-bars" onclick="showMenu()"></i>
+    </nav>
+    <div class="text-box" id="uploadTextBox">
+      <h1>UPLOAD FOLDER HERE</h1>
+      <p>.JPG .PNG .GIF .BMP</p>
+      <p id="warningText" style="color: #D3D3D3; font-size: 16px; text-align: center; position: absolute; top: 320px; width: 100%;">
+        Kindly ensure that your folder contains a minimum of six images of deer before proceeding.
+      </p>
+      <a href="javascript:void(0);" class="hero-btn" onclick="triggerFileInput()">GET STARTED</a>
+      <input type="file" id="folderInput" style="display: none;" webkitdirectory directory />
+    </div>
+  </section>
+
+  <!-- Fun Fact Title -->
+  <div id="funFactTitle">Fun Fact:</div>
+  
+
+  <!-- Movable DEERCATCHER Text -->
+  <div id="deercatcherText">DEERCATCHER</div>
+
+  <div id="loadingScreen">
+    <div id="loadingBarContainer">
+      <div id="loadingBar"></div>
+    </div>
+    <img src="C:/Users/Khion/OneDrive/Desktop/Vak IF/PWS webapp/images/deerrunning.gif" id="deer" alt="Running Deer" />
+    <p>Processing images...</p>
+  </div>
+
+  <div id="filePreview"></div>
+  <input type="file" id="folderInput" name="files" multiple webkitdirectory />
+
+  <!-- Slider container for processed deer images (initially empty and hidden) -->
+  <div class="slider" id="deerSlider" style="display: none;">
+    <div class="slider-track" id="sliderTrack"></div>
+  </div>
+
+  <!-- The download button starts off hidden -->
+  <button id="downloadButton" style="display: none;">DOWNLOAD</button>
+
+ 
+
+  <script>
+    window.addEventListener('scroll', function() {
+    // Check how far the user has scrolled
+    let scrollPosition = window.scrollY || window.pageYOffset;
+
+    // If the user scrolls down more than 500px, redirect to about.html
+    if (scrollPosition > 500) {
+      window.location.href = "about.html"; // Redirect to about.html
+    }
+    });
+    var navLinks = document.getElementById("navLinks");
+    function triggerFileInput() {
+      // Hide the warning text after the user clicks "GET STARTED"
+      document.getElementById("warningText").style.display = "none";
+      
+      // Trigger the folder input click
+      document.getElementById("folderInput").click();
+    }
+
+    function showMenu() {
+      navLinks.style.right = "0";
+    }
+
+    function hideMenu() {
+      navLinks.style.right = "-200px";
+    }
+
+    function triggerFileInput() {
+      document.getElementById("folderInput").click();
+    }
+
+    // Array of deer facts for display during processing
+    const deerFacts = [
+      "Curaçao is home to a unique subspecies of White-tailed Deer.",
+      "Deer are excellent at adapting to dry and rocky environments.",
+      "White-tailed Deer in Curaçao are most active at dawn and dusk.",
+      "Baby deer are born year-round, not just in the spring!",
+      "Male deer often have antlers, while females do not.",
+      "Curaçao's deer are relatively small compared to those in other places.",
+      "The spots on young deer help them blend into their surroundings.",
+      "Deer in Curaçao can travel up to 5 km a day.",
+      "The deer population in Christoffelpark is higher than in other areas of the island.",
+      "The deer are primarily herbivores, eating grasses and shrubs.",
+      "Deer in Curaçao have adapted to live without abundant freshwater sources.",
+      "The island’s deer population includes mostly adults, with fewer subadults and juveniles.",
+      "Deer can often be seen near waterholes or forest edges.",
+      "Curaçao's White-tailed Deer are known for their curiosity and boldness.",
+      "The deer are well camouflaged, with coats that help them blend into the landscape.",
+      "Curaçao’s deer love exploring the island’s diverse landscapes, from hills to terraces.",
+      "The deer here are generally solitary but can be seen in small groups.",
+      "Males and females have different activity patterns, with males more active in certain seasons.",
+      "Curaçao's deer don’t migrate—they stay within their home ranges.",
+      "Adult deer in Curaçao are excellent at foraging for food, even in tough conditions.",
+      "The deer’s keen senses help them detect threats from far away.",
+      "Baby deer, or fawns, stay hidden for safety during their first weeks.",
+      "Curaçao's deer are not picky eaters; they adapt their diet based on what's available.",
+      "Deer tracks are a great way to spot them, especially after a rainfall.",
+      "The deer help keep the island’s vegetation in check by browsing on plants.",
+      "White-tailed Deer are known for their speed and agility when they need to escape danger.",
+      "Deer in Curaçao are resilient and can survive the island’s extreme weather.",
+      "The deer’s populations are steadily monitored to maintain a healthy balance.",
+      "Curaçao’s deer are a key part of the island's ecosystem and biodiversity.",
+      "The deer have a wide range of habitats, from forests to coastal areas"
+    ];
+
+    document.getElementById("folderInput").addEventListener("change", function (event) {
+      const files = event.target.files;
+      if (files.length === 0) return;
+
+      // Hide the upload text and fun fact title
+      document.getElementById("uploadTextBox").style.display = "none";
+      document.getElementById("funFactTitle").style.display = "none";
+
+      const folderName = files[0].webkitRelativePath.split("/")[0];
+      const folderIconPath = "C:/Users/Khion/OneDrive/Desktop/Vak IF/PWS webapp/images/free-folder-icon-1484-thumb.png";
+
+      let filePreviewContainer = document.getElementById("filePreview");
+      filePreviewContainer.innerHTML = "";
+
+      const folderIcon = document.createElement("img");
+      folderIcon.className = "folder-icon";
+      folderIcon.src = folderIconPath;
+      filePreviewContainer.appendChild(folderIcon);
+
+      const fileName = document.createElement("div");
+      fileName.id = "fileName";
+      fileName.textContent = "Folder Name: " + folderName;
+      filePreviewContainer.appendChild(fileName);
+
+      const uploadButton = document.createElement("button");
+      uploadButton.id = "uploadButton";
+      uploadButton.textContent = "UPLOAD";
+      filePreviewContainer.appendChild(uploadButton);
+
+      uploadButton.onclick = async function () {
+        let formData = new FormData();
+        for (let file of files) {
+          formData.append("files", file);
+        }
+
+        // Hide the preview and show the loading screen
+        document.getElementById("filePreview").style.display = "none";
+        document.getElementById("uploadTextBox").style.display = "none";
+        document.getElementById("loadingScreen").style.display = "block";
+        document.getElementById("funFactTitle").style.display = "block";
+
+        const deerTextElement = document.getElementById("deercatcherText");
+        deerTextElement.style.display = "block";
+
+        function updateDeerFact() {
+          const randomIndex = Math.floor(Math.random() * deerFacts.length);
+          deerTextElement.textContent = deerFacts[randomIndex];
+        }
+        updateDeerFact();
+        const factInterval = setInterval(updateDeerFact, 5000);
+
+        function updateProgressBarAndDeer(percentage) {
+          document.getElementById("loadingBar").style.width = percentage + "%";
+          const deerMiddleOffset = 75;
+          const progressBarWidth = 480;
+          let deerPosition = (percentage / 100) * progressBarWidth - deerMiddleOffset;
+          document.getElementById("deer").style.left = deerPosition + "px";
+        }
+
+        // Start listening to progress updates via SSE
+        const eventSource = new EventSource("http://localhost:5000/progress");
+        eventSource.onmessage = function (event) {
+          const progress = parseInt(event.data, 10);
+          updateProgressBarAndDeer(progress);
+
+          if (progress === 100) {
+            eventSource.close();
+            clearInterval(factInterval);
+            setTimeout(() => {
+              deerTextElement.style.display = "none";
+              document.getElementById("funFactTitle").style.display = "none";
+              // When processing is finished, fetch the list of processed deer images.
+              // After processing is finished, fetch the list of processed deer images.
+              fetch("http://localhost:5000/list_deer")
+                .then(response => response.json())
+                .then(data => {
+                  const sliderTrack = document.getElementById("sliderTrack");
+                  sliderTrack.innerHTML = "";
+
+                  // Ensure only a maximum of 6 images are used
+                  const imagesToShow = data.images.slice(0, 6);
+
+                  // A function to create an image element
+                  function createImage(imageURL, index) {
+                    const img = document.createElement("img");
+                    img.src = imageURL;
+                    img.alt = "Deer image " + (index + 1);
+                    return img;
+                  }
+
+                  // Append the images once...
+                  imagesToShow.forEach((imageURL, index) => {
+                    sliderTrack.appendChild(createImage(imageURL, index));
+                  });
+                  // ...and duplicate them for seamless looping.
+                  imagesToShow.forEach((imageURL, index) => {
+                    sliderTrack.appendChild(createImage(imageURL, index));
+                  });
+
+                  // Now display the slider
+                  document.getElementById("deerSlider").style.display = "block";
+                })
+                .catch(error => {
+                  console.error("Error fetching deer images:", error);
+                });
+
+
+
+              document.getElementById("downloadButton").style.display = "block";
+              document.getElementById("loadingScreen").style.display = "none";
+              document.getElementById("deer").style.display = "none";
+            }, 1000);
+          }
+        };
+
+        // Send the folder to the backend for processing.
+        try {
+          let response = await fetch("http://localhost:5000/upload_folder", {
+            method: "POST",
+            body: formData,
+          });
+          // Do not trigger any download here; the backend returns a JSON message.
+          if (!response.ok) {
+            alert("Error processing images!");
+          }
+        } catch (error) {
+          console.error("Upload error:", error);
+        }
+      };
+    });
+
+    // Event listener for the download button; this calls the /generate_zip endpoint.
+    document.getElementById("downloadButton").onclick = async function () {
+      try {
+        let response = await fetch("http://localhost:5000/generate_zip");
+        if (response.ok) {
+          const blob = await response.blob();
+          const link = document.createElement("a");
+          link.href = URL.createObjectURL(blob);
+          link.download = "processed_images.zip";
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        } else {
+          alert("Error downloading the file.");
+        }
+      } catch (error) {
+        console.error("Download error:", error);
+      }
+    };
+  </script>
+</body>
+</html>
