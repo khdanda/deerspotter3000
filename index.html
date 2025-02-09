@@ -374,7 +374,7 @@
           const progress = parseInt(event.data, 10);
           updateProgressBarAndDeer(progress);
 
-          if (progress === 100) {
+          if (progress === 97) {
             eventSource.close();
             clearInterval(factInterval);
             setTimeout(() => {
