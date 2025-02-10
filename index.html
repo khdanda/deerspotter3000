@@ -382,11 +382,53 @@
               document.getElementById("funFactTitle").style.display = "none";
               // When processing is finished, fetch the list of processed deer images.
               // After processing is finished, fetch the list of processed deer images.
-              fetch("https://deer-spotter-thierparapp-426183211567.us-central1.run.app/list_deer")
-                .then(response => response.json())
-                .then(data => {
-                  const sliderTrack = document.getElementById("sliderTrack");
-                  sliderTrack.innerHTML = "";
+             setTimeout(() => {
+  const maxRetries = 5;  // Number of retries
+  let attempts = 0;
+
+  function fetchDeerImages() {
+    fetch("https://deer-spotter-thierparapp-426183211567.us-central1.run.app/list_deer")
+      .then(response => response.json())
+      .then(data => {
+        if (data.images && data.images.length > 0) {
+          const sliderTrack = document.getElementById("sliderTrack");
+          sliderTrack.innerHTML = "";
+
+          const imagesToShow = data.images.slice(0, 6);
+
+          imagesToShow.forEach((imageURL, index) => {
+            const img = document.createElement("img");
+            img.src = imageURL;
+            img.alt = "Deer image " + (index + 1);
+            sliderTrack.appendChild(img);
+          });
+
+          // Add images again for seamless looping
+          imagesToShow.forEach((imageURL, index) => {
+            const img = document.createElement("img");
+            img.src = imageURL;
+            img.alt = "Deer image " + (index + 1);
+            sliderTrack.appendChild(img);
+          });
+
+          // Show the slider
+          document.getElementById("deerSlider").style.display = "block";
+        } else {
+          throw new Error("No images found");
+        }
+      })
+      .catch(error => {
+        console.error(`Attempt ${attempts + 1} failed:`, error);
+        attempts++;
+        if (attempts < maxRetries) {
+          setTimeout(fetchDeerImages, 2000);  // Retry after 2 seconds
+        }
+      });
+  }
+
+  fetchDeerImages(); // Start fetching
+}, 2000);  // Initial delay before the first attempt
+
 
                   // Ensure only a maximum of 6 images are used
                   const imagesToShow = data.images.slice(0, 6);
