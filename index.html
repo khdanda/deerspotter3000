@@ -377,46 +377,65 @@
           if (progress === 100) {
             eventSource.close();
             clearInterval(factInterval);
+      
             setTimeout(() => {
               deerTextElement.style.display = "none";
               document.getElementById("funFactTitle").style.display = "none";
-              // When processing is finished, fetch the list of processed deer images.
-              // After processing is finished, fetch the list of processed deer images.
-              fetch("https://deer-spotter-thierparapp-426183211567.us-central1.run.app/list_deer")
-                .then(response => response.json())
-                .then(data => {
+      
+              // Retry mechanism for fetching processed images
+              async function fetchDeerImages(retries = 3) {
+                try {
+                  let response = await fetch(
+                    "https://deer-spotter-thierparapp-426183211567.us-central1.run.app/list_deer"
+                  );
+      
+                  if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                  }
+      
+                  let data = await response.json();
+      
+                  if (!data || !data.images || data.images.length === 0) {
+                    throw new Error("No images found in response.");
+                  }
+      
                   const sliderTrack = document.getElementById("sliderTrack");
                   sliderTrack.innerHTML = "";
-
+      
                   // Ensure only a maximum of 6 images are used
                   const imagesToShow = data.images.slice(0, 6);
-
-                  // A function to create an image element
+      
                   function createImage(imageURL, index) {
                     const img = document.createElement("img");
                     img.src = imageURL;
                     img.alt = "Deer image " + (index + 1);
                     return img;
                   }
-
-                  // Append the images once...
+      
                   imagesToShow.forEach((imageURL, index) => {
                     sliderTrack.appendChild(createImage(imageURL, index));
                   });
-                  // ...and duplicate them for seamless looping.
+      
+                  // Duplicate images for smooth scrolling
                   imagesToShow.forEach((imageURL, index) => {
                     sliderTrack.appendChild(createImage(imageURL, index));
                   });
-
-                  // Now display the slider
+      
                   document.getElementById("deerSlider").style.display = "block";
-                })
-                .catch(error => {
+                } catch (error) {
                   console.error("Error fetching deer images:", error);
-                });
-
-
-
+      
+                  if (retries > 0) {
+                    console.log(`Retrying... (${3 - retries} attempts left)`);
+                    setTimeout(() => fetchDeerImages(retries - 1), 2000);
+                  } else {
+                    console.error("Max retries reached. Unable to load images.");
+                  }
+                }
+              }
+      
+              fetchDeerImages();
+      
               document.getElementById("downloadButton").style.display = "block";
               document.getElementById("loadingScreen").style.display = "none";
               document.getElementById("deer").style.display = "none";
