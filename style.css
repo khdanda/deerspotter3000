@@ -12,6 +12,14 @@
     font-style: normal;
 }
 
+html, body {
+  overflow-x: hidden; /* Prevents horizontal scrolling */
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+
 /* Header Section */
 .header {
     min-height: 100vh;
