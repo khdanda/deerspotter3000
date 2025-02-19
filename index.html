@@ -371,7 +371,7 @@
         }
 
         // Start listening to progress updates via SSE
-        const eventSource = new EventSource("https://imsotiredofthiser-426183211567.us-central1.run.app/progress");
+        const eventSource = new EventSource("https://dadymamispotter-426183211567.us-central1.run.app/progress");
         eventSource.onmessage = function (event) {
           const progress = parseInt(event.data, 10);
           updateProgressBarAndDeer(progress);
@@ -388,7 +388,7 @@
               async function fetchDeerImages(retries = 3) {
                 try {
                   let response = await fetch(
-                    "https://imsotiredofthiser-426183211567.us-central1.run.app/list_deer"
+                    "https://dadymamispotter-426183211567.us-central1.run.app/list_deer"
                   );
       
                   if (!response.ok) {
@@ -447,7 +447,7 @@
 
         // Send the folder to the backend for processing.
         try {
-          let response = await fetch("https://imsotiredofthiser-426183211567.us-central1.run.app/upload", {
+          let response = await fetch("https://dadymamispotter-426183211567.us-central1.run.app/upload", {
             method: "POST",
             body: formData,
           });
@@ -464,7 +464,7 @@
     // Event listener for the download button; this calls the /generate_zip endpoint.
     document.getElementById("downloadButton").onclick = async function () {
       try {
-        let response = await fetch("https://imsotiredofthiser-426183211567.us-central1.run.app/generate_zip");
+        let response = await fetch("https://dadymamispotter-426183211567.us-central1.run.app/generate_zip");
         if (response.ok) {
           const blob = await response.blob();
           const link = document.createElement("a");
